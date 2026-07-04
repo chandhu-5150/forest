@@ -1,98 +1,216 @@
 // ======================================
-// FWI Prediction UI Script
+// Forest Fire Prediction Dashboard
+// script.js
 // ======================================
 
-// Page Loading Animation
-window.addEventListener("load", function () {
-    document.body.classList.add("loaded");
+// Page Fade In
+window.addEventListener("load", () => {
+    document.body.style.opacity = "1";
 });
 
-// Button Click Animation
-const button = document.querySelector(".predict-btn");
+// ------------------------------
+// Input Animation
+// ------------------------------
 
-if (button) {
-
-    button.addEventListener("click", function () {
-
-        button.innerHTML = "Predicting...";
-
-        button.style.opacity = "0.8";
-
-    });
-
-}
-
-// Input Focus Animation
 const inputs = document.querySelectorAll("input");
 
 inputs.forEach((input) => {
 
     input.addEventListener("focus", () => {
 
-        input.style.boxShadow =
-            "0 0 15px rgba(255,107,0,0.7)";
+        input.parentElement.classList.add("active");
 
     });
 
     input.addEventListener("blur", () => {
 
-        input.style.boxShadow = "none";
+        input.parentElement.classList.remove("active");
 
     });
 
 });
 
-// Fade-in Animation
-const card = document.querySelector(".glass-card");
+// ------------------------------
+// Button Loading Animation
+// ------------------------------
 
-if (card) {
+const form = document.querySelector("form");
+const button = document.querySelector("button");
 
-    card.style.opacity = "0";
+if (form && button) {
 
-    card.style.transform = "translateY(30px)";
+    form.addEventListener("submit", function () {
 
-    setTimeout(() => {
+        button.disabled = true;
 
-        card.style.transition = "all 0.8s ease";
+        button.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> Predicting...';
 
-        card.style.opacity = "1";
-
-        card.style.transform = "translateY(0px)";
-
-    }, 300);
+    });
 
 }
 
+// ------------------------------
+// Card Hover Effect
+// ------------------------------
+
+const cards = document.querySelectorAll(".result-card, footer div");
+
+cards.forEach(card => {
+
+    card.addEventListener("mouseenter", () => {
+
+        card.style.transform = "translateY(-8px)";
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.transform = "translateY(0px)";
+
+    });
+
+});
+
+// ------------------------------
 // Input Validation
-document.querySelector("form").addEventListener("submit", function(e){
+// ------------------------------
 
-    const fields=document.querySelectorAll("input");
+if (form) {
 
-    let valid=true;
+    form.addEventListener("submit", function (e) {
 
-    fields.forEach(field=>{
+        let valid = true;
 
-        if(field.value.trim()===""){
+        inputs.forEach(input => {
 
-            valid=false;
+            if (input.value.trim() === "") {
 
-            field.style.border="2px solid red";
+                valid = false;
 
-        }
-        else{
+                input.style.border = "2px solid #ff3b3b";
 
-            field.style.border="none";
+            } else {
+
+                input.style.border = "2px solid transparent";
+
+            }
+
+        });
+
+        if (!valid) {
+
+            e.preventDefault();
+
+            alert("Please fill all fields.");
+
+            button.disabled = false;
+
+            button.innerHTML =
+                '<i class="fa-solid fa-fire"></i> Predict FWI';
 
         }
 
     });
 
-    if(!valid){
+}
 
-        alert("Please fill all fields.");
+// ------------------------------
+// Prediction Highlight
+// ------------------------------
 
-        e.preventDefault();
+const prediction = document.querySelector(".prediction");
+
+if (prediction) {
+
+    const value = parseFloat(prediction.innerText);
+
+    if (!isNaN(value)) {
+
+        if (value < 5) {
+
+            prediction.style.color = "#22c55e";
+
+        }
+
+        else if (value < 15) {
+
+            prediction.style.color = "#facc15";
+
+        }
+
+        else if (value < 30) {
+
+            prediction.style.color = "#fb923c";
+
+        }
+
+        else {
+
+            prediction.style.color = "#ef4444";
+
+        }
+
+    }
+
+}
+
+// ------------------------------
+// Floating Header Effect
+// ------------------------------
+
+window.addEventListener("scroll", () => {
+
+    const header = document.querySelector("header");
+
+    if (window.scrollY > 20) {
+
+        header.style.background = "rgba(5,10,20,.90)";
+
+    }
+
+    else {
+
+        header.style.background = "rgba(0,0,0,.30)";
 
     }
 
 });
+
+// ------------------------------
+// Footer Animation
+// ------------------------------
+
+const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.style.opacity = "1";
+
+            entry.target.style.transform = "translateY(0px)";
+
+        }
+
+    });
+
+});
+
+document.querySelectorAll("footer div").forEach(card => {
+
+    card.style.opacity = "0";
+
+    card.style.transform = "translateY(50px)";
+
+    card.style.transition = "all .8s ease";
+
+    observer.observe(card);
+
+});
+
+// ------------------------------
+// Console Message
+// ------------------------------
+
+console.log("🔥 Forest Fire Prediction Dashboard Loaded Successfully");

@@ -1,213 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forest Fire Weather Index Prediction</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>FWI Prediction</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
-<div class="overlay"></div>
+<header>
 
-<div class="container">
+    <div class="logo">
 
-    <!-- LEFT SIDE -->
-    <div class="left-panel">
+        <i class="fa-solid fa-fire-flame-curved"></i>
 
-        <div class="logo">
-            🔥
-        </div>
+        <div>
 
-        <h1>FWI Prediction</h1>
+            <h2>FWI <span>PREDICTION</span></h2>
 
-        <p class="subtitle">
-            Forest Fire Weather Index Prediction using Machine Learning
-        </p>
-
-        <form action="{{ url_for('predict_datapoint') }}" method="POST">
-
-            <div class="row">
-
-                <div class="input-box">
-                    <label>Temperature</label>
-                    <input type="text"
-                           name="Temperature"
-                           placeholder="Temperature (°C)"
-                           required>
-                </div>
-
-                <div class="input-box">
-                    <label>Humidity</label>
-                    <input type="text"
-                           name="RH"
-                           placeholder="Relative Humidity"
-                           required>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="input-box">
-                    <label>Wind Speed</label>
-                    <input type="text"
-                           name="Ws"
-                           placeholder="Wind Speed"
-                           required>
-                </div>
-
-                <div class="input-box">
-                    <label>Rain</label>
-                    <input type="text"
-                           name="Rain"
-                           placeholder="Rain"
-                           required>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="input-box">
-                    <label>FFMC</label>
-                    <input type="text"
-                           name="FFMC"
-                           placeholder="FFMC"
-                           required>
-                </div>
-
-                <div class="input-box">
-                    <label>DMC</label>
-                    <input type="text"
-                           name="DMC"
-                           placeholder="DMC"
-                           required>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="input-box">
-                    <label>ISI</label>
-                    <input type="text"
-                           name="ISI"
-                           placeholder="ISI"
-                           required>
-                </div>
-
-                <div class="input-box">
-                    <label>Classes</label>
-                    <input type="text"
-                           name="Classes"
-                           placeholder="Classes"
-                           required>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="input-box full">
-                    <label>Region</label>
-                    <input type="text"
-                           name="Region"
-                           placeholder="Region"
-                           required>
-                </div>
-
-            </div>
-
-            <button class="predict-btn" type="submit">
-
-                <i class="fa-solid fa-fire"></i>
-
-                Predict FWI
-
-            </button>
-
-        </form>
-
-    </div>
-
-    <!-- RIGHT SIDE -->
-
-    <div class="right-panel">
-
-        <div class="glass-card">
-
-            <h2>
-
-                <i class="fa-solid fa-chart-line"></i>
-
-                Prediction Result
-
-            </h2>
-
-            {% if result %}
-
-            <div class="prediction">
-
-                {{ result }}
-
-            </div>
-
-            {% else %}
-
-            <div class="prediction waiting">
-
-                Waiting for Prediction...
-
-            </div>
-
-            {% endif %}
-
-            <div class="danger-scale">
-
-                <div class="low">LOW</div>
-
-                <div class="moderate">MODERATE</div>
-
-                <div class="high">HIGH</div>
-
-                <div class="extreme">EXTREME</div>
-
-            </div>
-
-            <div class="info">
-
-                <h3>
-
-                    <i class="fa-solid fa-tree"></i>
-
-                    Forest Fire Prediction
-
-                </h3>
-
-                <p>
-
-                    This application predicts the Fire Weather Index (FWI)
-                    using Machine Learning based on weather conditions.
-
-                </p>
-
-            </div>
+            <p>Forest Fire Weather Index</p>
 
         </div>
 
     </div>
+
+    <div class="badge">
+
+        <i class="fa-solid fa-circle"></i>
+
+        AI / ML Model
+
+    </div>
+
+</header>
+
+<section class="hero">
+
+<div class="left">
+
+<h2>Input Parameters</h2>
+
+<div class="line"></div>
+
+<form action="{{ url_for('predict_datapoint') }}" method="POST">
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-temperature-three-quarters"></i>
+
+Temperature (°C)
+
+</label>
+
+<input type="text"
+name="Temperature"
+placeholder="e.g. 25.6"
+required>
 
 </div>
 
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-droplet"></i>
+
+Relative Humidity (%)
+
+</label>
+
+<input type="text"
+name="RH"
+placeholder="e.g. 45"
+required>
+
+</div>
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-wind"></i>
+
+Wind Speed (km/h)
+
+</label>
+
+<input type="text"
+name="Ws"
+placeholder="e.g. 12.5"
+required>
+
+</div>
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-cloud-rain"></i>
+
+Rain (mm)
+
+</label>
+
+<input type="text"
+name="Rain"
+placeholder="e.g. 0"
+required>
+
+</div>
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-fire"></i>
+
+FFMC
+
+</label>
+
+<input type="text"
+name="FFMC"
+placeholder="e.g. 85"
+required>
+
+</div>
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-tree"></i>
+
+DMC
+
+</label>
+
+<input type="text"
+name="DMC"
+placeholder="e.g. 26"
+required>
+
+</div>
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-bolt"></i>
+
+ISI
+
+</label>
+
+<input type="text"
+name="ISI"
+placeholder="e.g. 7"
+required>
+
+</div>
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-tag"></i>
+
+Classes
+
+</label>
+
+<input type="text"
+name="Classes"
+placeholder="e.g. 1"
+required>
+
+</div>
+
+<div class="field">
+
+<label>
+
+<i class="fa-solid fa-location-dot"></i>
+
+Region
+
+</label>
+
+<input type="text"
+name="Region"
+placeholder="e.g. 1"
+required>
+
+</div>
+
+<button type="submit">
+
+<i class="fa-solid fa-brain"></i>
+
+PREDICT FWI
+
+</button>
+
+</form>
+
+<p class="note">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Provide accurate values for better prediction
+
+</p>
+
+</div>
+
+<div class="right">
+
+<div class="content">
+
+<div class="small-line"></div>
+
+<h1>
+
+Predict Forest Fire
+
+<br>
+
+<span>Weather Index</span>
+
+</h1>
+
+<p>
+
+Get accurate Forest Fire Weather Index prediction
+using Machine Learning based on real-time
+weather conditions.
+
+</p>
+
+<div class="result-card">
+
+<h3>
+
+THE FWI PREDICTION IS
+
+</h3>
+
+{% if result %}
+
+<h1 class="prediction">
+
+{{ result }}
+
+</h1>
+
+{% else %}
+
+<h1 class="prediction">
+
+--
+
+</h1>
+
+{% endif %}
+
+<div class="meter">
+
+<div class="low"></div>
+
+<div class="moderate"></div>
+
+<div class="high"></div>
+
+<div class="extreme"></div>
+
+</div>
+
+<div class="levels">
+
+<span>LOW</span>
+
+<span>MODERATE</span>
+
+<span>HIGH</span>
+
+<span>EXTREME</span>
+
+</div>
+
+<div class="alert">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+<div>
+
+<h4>Fire Danger Rating</h4>
+
+<p>
+
+Prediction generated successfully using
+Machine Learning.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div>
+
+<i class="fa-solid fa-microchip"></i>
+
+<h3>ML Powered</h3>
+
+<p>Advanced Machine Learning Model</p>
+
+</div>
+
+<div>
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>Accurate Prediction</h3>
+
+<p>High accuracy weather prediction</p>
+
+</div>
+
+<div>
+
+<i class="fa-solid fa-shield-halved"></i>
+
+<h3>Fire Safety</h3>
+
+<p>Stay informed and safe</p>
+
+</div>
+
+<div>
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<h3>Real-time Insights</h3>
+
+<p>Instant prediction results</p>
+
+</div>
+
+</footer>
+
+<script src="{{ url_for('static',filename='js/script.js') }}"></script>
 
 </body>
+
 </html>
