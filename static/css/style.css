@@ -436,8 +436,8 @@ body{
 
     background:
     linear-gradient(
-    rgba(0,0,0,.80),
-    rgba(5,10,25,.90)),
+    rgba(0,0,0,.35),
+    rgba(5,10,25,.45)),
     url("../images/forest.jpg");
     
 
