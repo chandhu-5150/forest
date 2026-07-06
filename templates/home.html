@@ -6,378 +6,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>FWI Prediction</title>
+    <title>FWI Prediction Dashboard</title>
 
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
 <body>
 
-<header>
+<div class="smoke"></div>
+<div class="particles"></div>
 
-    <div class="logo">
+<header class="dashboard-header">
 
+<header class="dashboard-header">
+
+    <div class="brand">
         <i class="fa-solid fa-fire-flame-curved"></i>
+        <h2>BRIC<span>Z</span></h2>
+    </div>
 
-        <div>
+    <a href="{{ url_for('index') }}" class="home-btn">
+        <i class="fa-solid fa-house"></i>
+        Home
+    </a>
 
-            <h2>FWI <span>PREDICTION</span></h2>
+</header>
 
-            <p>Forest Fire Weather Index</p>
+<div class="dashboard">
+
+    <!-- LEFT PANEL -->
+
+    <div class="form-card">
+
+        <h2>
+            <i class="fa-solid fa-sliders"></i>
+            Weather Parameters
+        </h2>
+
+        <form action="{{ url_for('predict_datapoint') }}" method="POST">
+
+            <input type="number" step="any" name="Temperature" placeholder="🌡 Temperature" required>
+
+            <input type="number" step="any" name="RH" placeholder="💧 Relative Humidity" required>
+
+            <input type="number" step="any" name="Ws" placeholder="💨 Wind Speed" required>
+
+            <input type="number" step="any" name="Rain" placeholder="🌧 Rain" required>
+
+            <input type="number" step="any" name="FFMC" placeholder="🔥 FFMC" required>
+
+            <input type="number" step="any" name="DMC" placeholder="🌲 DMC" required>
+
+            <input type="number" step="any" name="ISI" placeholder="⚡ ISI" required>
+
+            <input type="number" step="any" name="Classes" placeholder="📊 Classes" required>
+
+            <input type="number" step="any" name="Region" placeholder="📍 Region" required>
+
+            <button type="submit" class="predict-btn">
+
+                <i class="fa-solid fa-fire"></i>
+
+                Predict Fire Weather Index
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <div class="result-card">
+
+        <h2>
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Prediction Result
+
+        </h2>
+
+        {% if result %}
+
+<div class="gauge-container">
+
+    <div class="gauge">
+
+        <div class="gauge-inner">
+
+            {% if result %}
+                <span class="gauge-value">{{ result }}</span>
+            {% else %}
+                <span class="gauge-value">--</span>
+            {% endif %}
+
+            <small>FWI</small>
 
         </div>
 
     </div>
 
-    <div class="badge">
+</div>
 
-        <i class="fa-solid fa-circle"></i>
+        <div class="risk-badge {{ color }}">
 
-        AI / ML Model
+            {{ risk }}
+
+        </div>
+
+        <div class="meter">
+
+            <div class="green"></div>
+
+            <div class="yellow"></div>
+
+            <div class="orange"></div>
+
+            <div class="red"></div>
+
+        </div>
+
+        <p class="advice">
+
+            {{ advice }}
+
+        </p>
+
+        {% else %}
+        <div class="fire-icon">
+         🔥
+        </div>
+
+        <div class="prediction-number">
+
+            --
+
+        </div>
+
+        <div class="risk waiting">
+
+            Waiting for Prediction...
+
+        </div>
+
+        {% endif %}
+
+        <p class="description">
+
+            The Fire Weather Index (FWI) predicts the
+            potential intensity of forest fires using
+            Machine Learning and weather conditions.
+
+        </p>
 
     </div>
 
-</header>
-
-<section class="hero">
-
-<div class="left">
-
-<h2>Input Parameters</h2>
-
-<div class="line"></div>
-
-<form action="{{ url_for('predict_datapoint') }}" method="POST">
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-temperature-three-quarters"></i>
-
-Temperature (°C)
-
-</label>
-
-<input type="text"
-name="Temperature"
-placeholder="e.g. 25.6"
-required>
-
 </div>
 
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-droplet"></i>
-
-Relative Humidity (%)
-
-</label>
-
-<input type="text"
-name="RH"
-placeholder="e.g. 45"
-required>
-
-</div>
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-wind"></i>
-
-Wind Speed (km/h)
-
-</label>
-
-<input type="text"
-name="Ws"
-placeholder="e.g. 12.5"
-required>
-
-</div>
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-cloud-rain"></i>
-
-Rain (mm)
-
-</label>
-
-<input type="text"
-name="Rain"
-placeholder="e.g. 0"
-required>
-
-</div>
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-fire"></i>
-
-FFMC
-
-</label>
-
-<input type="text"
-name="FFMC"
-placeholder="e.g. 85"
-required>
-
-</div>
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-tree"></i>
-
-DMC
-
-</label>
-
-<input type="text"
-name="DMC"
-placeholder="e.g. 26"
-required>
-
-</div>
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-bolt"></i>
-
-ISI
-
-</label>
-
-<input type="text"
-name="ISI"
-placeholder="e.g. 7"
-required>
-
-</div>
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-tag"></i>
-
-Classes
-
-</label>
-
-<input type="text"
-name="Classes"
-placeholder="e.g. 1"
-required>
-
-</div>
-
-<div class="field">
-
-<label>
-
-<i class="fa-solid fa-location-dot"></i>
-
-Region
-
-</label>
-
-<input type="text"
-name="Region"
-placeholder="e.g. 1"
-required>
-
-</div>
-
-<button type="submit">
-
-<i class="fa-solid fa-brain"></i>
-
-PREDICT FWI
-
-</button>
-
-</form>
-
-<p class="note">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-Provide accurate values for better prediction
-
-</p>
-
-</div>
-
-<div class="right">
-
-<div class="content">
-
-<div class="small-line"></div>
-
-<h1>
-
-Predict Forest Fire
-
-<br>
-
-<span>Weather Index</span>
-
-</h1>
-
-<p>
-
-Get accurate Forest Fire Weather Index prediction
-using Machine Learning based on real-time
-weather conditions.
-
-</p>
-
-<div class="result-card">
-
-<h3>
-
-THE FWI PREDICTION IS
-
-</h3>
-
-{% if result %}
-
-<h1 class="prediction">
-
-{{ result }}
-
-</h1>
-
-{% else %}
-
-<h1 class="prediction">
-
---
-
-</h1>
-
-{% endif %}
-
-<div class="meter">
-
-<div class="low"></div>
-
-<div class="moderate"></div>
-
-<div class="high"></div>
-
-<div class="extreme"></div>
-
-</div>
-
-<div class="levels">
-
-<span>LOW</span>
-
-<span>MODERATE</span>
-
-<span>HIGH</span>
-
-<span>EXTREME</span>
-
-</div>
-
-<div class="alert">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-<div>
-
-<h4>Fire Danger Rating</h4>
-
-<p>
-
-Prediction generated successfully using
-Machine Learning.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-<div>
-
-<i class="fa-solid fa-microchip"></i>
-
-<h3>ML Powered</h3>
-
-<p>Advanced Machine Learning Model</p>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-chart-line"></i>
-
-<h3>Accurate Prediction</h3>
-
-<p>High accuracy weather prediction</p>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-shield-halved"></i>
-
-<h3>Fire Safety</h3>
-
-<p>Stay informed and safe</p>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-clock-rotate-left"></i>
-
-<h3>Real-time Insights</h3>
-
-<p>Instant prediction results</p>
-
-</div>
-
-</footer>
-
-<script src="{{ url_for('static',filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 

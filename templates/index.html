@@ -1,135 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to BRICZ</title>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
+<meta charset="UTF-8">
 
-        body{
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            background:url("{{ url_for('static', filename='images/bricz.jpeg') }}");
-            background-size:cover;
-            background-position:center;
-            background-repeat:no-repeat;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .container{
-            width:700px;
-            text-align:center;
-            background:rgba(0,0,0,0.45);
-            backdrop-filter:blur(8px);
-            padding:50px;
-            border-radius:20px;
-            color:white;
-        }
+<title>BRICZ | Forest Fire Prediction</title>
 
-        h1{
-            font-size:55px;
-            margin-bottom:15px;
-            color:#ffffff;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-        h2{
-            font-size:24px;
-            color:#FFD700;
-            margin-bottom:20px;
-        }
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        p{
-            font-size:18px;
-            line-height:30px;
-            margin-bottom:35px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .btn{
-            text-decoration:none;
-            background:#000;
-            color:white;
-            padding:15px 35px;
-            font-size:20px;
-            border-radius:10px;
-            transition:0.3s;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        .btn:hover{
-            background:#FFD700;
-            color:black;
-        }
+<style>
 
-        .features{
-            display:flex;
-            justify-content:space-around;
-            margin-top:50px;
-            font-size:18px;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-        .feature{
-            width:180px;
-        }
+body{
 
-        footer{
-            margin-top:40px;
-            font-size:15px;
-            color:#dddddd;
-        }
-    </style>
+height:100vh;
+
+background:
+linear-gradient(rgba(5,10,20,.75),
+rgba(5,10,20,.75)),
+url("{{ url_for('static',filename='images/bricz.jpeg') }}");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
+}
+
+.container{
+
+width:90%;
+max-width:1200px;
+
+background:rgba(15,20,40,.45);
+
+backdrop-filter:blur(15px);
+
+border-radius:30px;
+
+padding:60px;
+
+box-shadow:0 25px 60px rgba(0,0,0,.55);
+
+animation:fadeUp 1s;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+transform:translateY(60px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:50px;
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.logo i{
+
+font-size:55px;
+
+color:#ff6b00;
+
+}
+
+.logo h1{
+
+font-size:42px;
+
+color:white;
+
+}
+
+.logo span{
+
+color:#ff6b00;
+
+}
+
+.badge{
+
+padding:12px 25px;
+
+border-radius:30px;
+
+background:#16a34a;
+
+font-weight:600;
+
+color:white;
+
+}
+
+.content{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:60px;
+
+align-items:center;
+
+}
+
+.left h2{
+
+font-size:58px;
+
+line-height:70px;
+
+color:white;
+
+margin-bottom:25px;
+
+}
+
+.left span{
+
+color:#ff6b00;
+
+}
+
+.left p{
+
+font-size:20px;
+
+line-height:35px;
+
+color:#d9d9d9;
+
+margin-bottom:40px;
+
+}
+
+.btn{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:18px 40px;
+
+border-radius:12px;
+
+background:linear-gradient(45deg,#ff6b00,#ff3d00);
+
+text-decoration:none;
+
+color:white;
+
+font-size:20px;
+
+font-weight:600;
+
+transition:.35s;
+
+}
+
+.btn:hover{
+
+transform:translateY(-5px);
+
+box-shadow:0 20px 40px rgba(255,107,0,.45);
+
+}
+
+.right{
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.info{
+
+width:100%;
+
+background:rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:35px;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.info h3{
+
+color:white;
+
+margin-bottom:25px;
+
+font-size:28px;
+
+}
+
+.info ul{
+
+list-style:none;
+
+}
+
+.info li{
+
+margin-bottom:20px;
+
+font-size:18px;
+
+color:#dddddd;
+
+}
+
+.info i{
+
+color:#ff6b00;
+
+margin-right:12px;
+
+}
+
+footer{
+
+margin-top:60px;
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:20px;
+
+}
+
+.card{
+
+background:rgba(255,255,255,.07);
+
+padding:25px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.35s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.card i{
+
+font-size:40px;
+
+color:#ff6b00;
+
+margin-bottom:15px;
+
+}
+
+.card h4{
+
+color:white;
+
+margin-bottom:10px;
+
+}
+
+.card p{
+
+color:#cccccc;
+
+font-size:15px;
+
+}
+
+@media(max-width:900px){
+
+.content{
+
+grid-template-columns:1fr;
+
+}
+
+footer{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+.left h2{
+
+font-size:42px;
+
+line-height:55px;
+
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>Welcome to BRICZ</h1>
+<header>
 
-    <h2>AI-Powered Forest Fire Weather Index Prediction</h2>
+<div class="logo">
 
-    <p>
-        Predict forest fire risk using Machine Learning.
-        Enter weather parameters and receive an instant
-        Fire Weather Index (FWI) prediction.
-    </p>
+<i class="fa-solid fa-fire-flame-curved"></i>
 
-    <a  href="{{ url_for('predict_datapoint') }}" class="btn">
-        Start Prediction →
-    </a>
+<h1>BRIC<span>Z</span></h1>
 
-    <div class="features">
+</div>
 
-        <div class="feature">
-            🔥<br><br>
-            Accurate Predictions
-        </div>
+<div class="badge">
 
-        <div class="feature">
-            🌍<br><br>
-            Environmental Monitoring
-        </div>
+AI Powered
 
-        <div class="feature">
-            ⚡<br><br>
-            Fast Results
-        </div>
+</div>
 
-    </div>
+</header>
 
-    <footer>
-        <br>
-        Developed by <b>P. Chandra Sekhar Reddy</b><br>
-        Department of Electronics and Communication Engineering
-    </footer>
+<div class="content">
+
+<div class="left">
+
+<h2>
+
+Forest Fire
+
+<span>Prediction</span>
+
+</h2>
+
+<p>
+
+Predict Forest Fire Weather Index using Machine Learning,
+weather parameters and AI-powered analytics.
+
+</p>
+
+<a href="{{ url_for('predict_datapoint') }}" class="btn">
+
+<i class="fa-solid fa-rocket"></i>
+
+Start Prediction
+
+</a>
+
+</div>
+
+<div class="right">
+
+<div class="info">
+
+<h3>Project Features</h3>
+
+<ul>
+
+<li><i class="fa-solid fa-check"></i> Machine Learning Prediction</li>
+
+<li><i class="fa-solid fa-check"></i> AWS Cloud Deployment</li>
+
+<li><i class="fa-solid fa-check"></i> Fast Prediction Engine</li>
+
+<li><i class="fa-solid fa-check"></i> Responsive Dashboard</li>
+
+<li><i class="fa-solid fa-check"></i> BRICZ AI Platform</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+<div class="card">
+
+<i class="fa-solid fa-brain"></i>
+
+<h4>Machine Learning</h4>
+
+<p>Powered by Ridge Regression</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-cloud"></i>
+
+<h4>AWS</h4>
+
+<p>Elastic Beanstalk Hosting</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-fire"></i>
+
+<h4>Fire Risk</h4>
+
+<p>Real-time Prediction</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-user"></i>
+
+<h4>Developer</h4>
+
+<p>P. Chandra Sekhar Reddy</p>
+
+</div>
+
+</footer>
 
 </div>
 
 </body>
+
 </html>

@@ -214,3 +214,82 @@ document.querySelectorAll("footer div").forEach(card => {
 // ------------------------------
 
 console.log("🔥 Forest Fire Prediction Dashboard Loaded Successfully");
+/* ===============================
+   FIRE RISK PROGRESS
+================================ */
+
+const fill = document.getElementById("progressFill");
+
+if(fill){
+
+    const risk = fill.dataset.risk;
+
+    let width = 0;
+
+    if(risk==="LOW") width=25;
+
+    if(risk==="MODERATE") width=50;
+
+    if(risk==="HIGH") width=75;
+
+    if(risk==="EXTREME") width=100;
+
+    setTimeout(()=>{
+
+        fill.style.width=width+"%";
+
+    },500);
+
+}
+// ================================
+// Fade In Cards
+// ================================
+
+window.addEventListener("load",()=>{
+
+    document.querySelectorAll(".form-card,.result-card").forEach(card=>{
+
+        card.style.opacity="0";
+
+        card.style.transform="translateY(40px)";
+
+        setTimeout(()=>{
+
+            card.style.transition="all .8s";
+
+            card.style.opacity="1";
+
+            card.style.transform="translateY(0px)";
+
+        },300);
+
+    });
+
+});
+/*==============================
+      FIRE PARTICLES
+===============================*/
+
+const container = document.querySelector(".particles");
+
+for(let i=0;i<40;i++){
+
+    const particle=document.createElement("span");
+
+    particle.style.left=Math.random()*100+"%";
+
+    particle.style.animationDuration=
+    (5+Math.random()*10)+"s";
+
+    particle.style.animationDelay=
+    Math.random()*6+"s";
+
+    particle.style.opacity=Math.random();
+
+    particle.style.width=
+    particle.style.height=
+    (4+Math.random()*8)+"px";
+
+    container.appendChild(particle);
+
+}

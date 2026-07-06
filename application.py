@@ -43,13 +43,36 @@ def predict_datapoint():
 
         prediction = round(result[0], 2)
 
+        # Fire Risk Category
+        if prediction < 5:
+            risk = "LOW"
+            color = "green"
+            advice = "Low fire risk. Conditions are generally safe."
+
+        elif prediction < 15:
+            risk = "MODERATE"
+            color = "yellow"
+            advice = "Moderate fire risk. Stay alert."
+
+        elif prediction < 30:
+            risk = "HIGH"
+            color = "orange"
+            advice = "High fire risk. Avoid open flames."
+
+        else:
+            risk = "EXTREME"
+            color = "red"
+            advice = "Extreme fire risk. Immediate precautions are recommended."
+
         return render_template(
             "home.html",
-            result=prediction
+            result=prediction,
+            risk=risk,
+            color=color,
+            advice=advice
         )
 
     return render_template("home.html")
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8085)
